@@ -1,17 +1,17 @@
 # C-Data_Structure-Algorithm-labs
 
-## Algorithms applied Here 
+Algorithms applied Here 
 
-Sequential Search
+### Sequential Search
 
 <p align="center">
-  <img width="700" src="Images/Sequential-Search.png">
+  <img width="700" src="../../Images/Sequential-Search.png">
 </p>
 
 
 
-Binary Search (without recursive) 
+### Binary Search (without recursive) 
 
 <p align="center">
-  <img width="700" src="Images/Binary-Search.jpg">
+  <img width="700" src="../../Images/Binary-Search.jpg">
 </p>
