@@ -1,0 +1,36 @@
+#include <stdio.h>
+#include <conio.h>
+
+
+
+typedef struct Node{
+
+	int ID;
+	char name[40];
+	Node* next;
+	Node* prev;
+
+}Node;
+
+typedef struct Linked_List{
+
+	Node* Start;
+	Node* End;
+
+};
+
+void main()
+{
+	clrscr();
+
+
+
+
+	getch();
+}
+
+Node* Create_Node()
+{
+	Return ( (Node)malloc(sizeof(Node)) );
+}
+

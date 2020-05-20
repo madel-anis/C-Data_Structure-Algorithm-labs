@@ -1,0 +1,61 @@
+#include <stdio.h>
+#include <string.h>
+
+#define SIZE 5
+
+void Swap(char **First , char **Second);
+void Selection_Sort(char **Arr, int Size);
+void main()
+{
+
+	int i;
+	char Arr[SIZE][20]={0};
+
+	clrscr();
+
+	for(i=0 ; i<SIZE ; i++)
+	{
+		printf("please Enter %d name : ",i+1);
+		scanf("%s",&Arr[i]);
+	}
+
+	Selection_Sort( &Arr , SIZE);
+
+	printf("\nThe Sorted Array is \n");
+	for(i=0 ; i<SIZE ; i++)
+	{
+		puts(Arr[i]);
+	}
+
+	getch();
+}
+
+void Selection_Sort(char** Arr, int Size)
+{
+	int Min=0;
+	int i,j;
+	char Temp[20];
+
+	for(i=0 ; i<Size-1 ; i++)
+	{
+		Min = i;
+		for(j=i+1 ; j<Size ; j++)
+		{
+			if( (strcmp(*(Arr+j), *(Arr+Min)) < 0) )
+			{
+				Min = j;
+			}
+		}
+			strcpy(Temp , Arr[i]);
+			strcpy(Arr[i] , Arr[Min]);
+			strcpy(Arr[Min] , Temp);
+
+	}
+}
+void Swap(char **First , char **Second)
+{
+	char Temp[50];
+	strcpy(Temp , *First);
+	strcpy(*First , *Second);
+	strcpy(*Second , Temp);
+}

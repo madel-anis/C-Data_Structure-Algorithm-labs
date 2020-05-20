@@ -1,0 +1,197 @@
+#include <stdio.h>
+
+#define TRUE (1)
+#define FALSE (0)
+#define LABELS_SIZE (3)
+#define ARROW_UP (72)
+#define ARROW_DOWN (80)
+#define ENTER (13)
+#define SIZE_STACK (10)
+
+char Labels[LABELS_SIZE][21]={"Push","Pop","Exit"};
+
+/*struct decleration*/
+
+typedef struct Stack{
+	int Size;
+	int Tos;
+	int* p_Stack_Element;
+}Stack;
+
+/*Prototype*/
+int Init_Stack(Stack* p_Stack , int Size);
+int IsEmptyStack(Stack* p_Stack);
+int IsFullStack(Stack* p_Stack);
+int push(Stack* p_Stack , int Data);
+int pop(Stack* p_Stack , int* Data);
+void Draw_Menu(int Counter);
+
+
+void main()
+{
+	int Exit_Flag = FALSE;
+	int Counter = 0;
+	char Key;
+	int Temp_Data;
+
+	Stack New_Stack;
+	Stack* p_New_Stack;
+	p_New_Stack = &New_Stack;
+
+	Init_Stack(p_New_Stack,SIZE_STACK);
+
+	while(!Exit_Flag)
+	{
+		clrscr();
+
+		Draw_Menu(Counter);
+
+		Key = getch();
+
+		if(Key == NULL)
+		{
+			Key = getch();
+			switch(Key)
+			{
+				case ARROW_UP:
+					Counter--;
+					if(Counter < 0)
+					{
+						Counter = LABELS_SIZE-1;
+					}
+					break;
+				case ARROW_DOWN:
+					Counter++;
+					if(Counter > LABELS_SIZE-1)
+					{
+						Counter = 0;
+					}
+			}
+		}
+		else if(Key == ENTER)
+		{
+			switch(Counter)
+			{
+				case 0:									//push
+
+						clrscr();
+						if(IsFullStack(p_New_Stack) == 1)
+						{
+							printf("There is no stack avaialble to be added\n");
+							getch();
+							break;
+						}
+						else
+						{
+							printf("Please Enter the Data wanted to be added to stack: ");
+							scanf("%d",&Temp_Data);
+							push(p_New_Stack , Temp_Data);
+						}
+					break;
+				case 1:									//Pop
+						clrscr();
+						if(pop(p_New_Stack , &Temp_Data) == 1)
+						{
+							printf("The Data: %d",Temp_Data);
+							getch();
+						 }
+						else
+						{
+							printf("There is no data avaialble in the stack\n");
+							getch();
+							break;
+						}
+				 break;
+				case 2:									//Delete
+						Exit_Flag = TRUE;
+						Free_Stack(p_New_Stack);
+
+			}
+		}
+
+
+	}
+	clrscr();
+	free(p_New_Stack);
+	printf("The program terminated\n");
+	getch();
+
+}
+
+int Init_Stack(Stack* p_Stack , int Size)
+{
+	p_Stack->p_Stack_Element =(int*)malloc(sizeof(int)*Size);
+	if( p_Stack->p_Stack_Element != NULL)
+	{
+		p_Stack->Size = Size;
+		p_Stack->Tos = 0;
+		return 1;
+	}
+	return 0;
+}
+
+int IsEmptyStack(Stack* p_Stack)
+{
+	if(p_Stack->Tos == 0)
+	{
+		return 1;
+	}
+	return 0;
+}
+
+int IsFullStack(Stack* p_Stack)
+{
+	if(p_Stack->Tos == p_Stack->Size)
+	{
+		return 1;
+	}
+	return 0;
+}
+
+int push(Stack* p_Stack , int Data)
+{
+	if(IsFullStack(p_Stack) == 1)
+	{
+		return 0;
+	}
+	else
+	{
+		p_Stack->p_Stack_Element[p_Stack->Tos] = Data;
+		p_Stack->Tos++;
+		return 1;
+	}
+}
+
+int pop(Stack* p_Stack , int* Data)
+{
+	if(IsEmptyStack(p_Stack) == 1)
+	{
+		return 0;
+	}
+	else
+	{
+		p_Stack->Tos--;
+		*Data = p_Stack->p_Stack_Element[p_Stack->Tos];
+		return 1;
+	}
+}
+
+void Draw_Menu(int Counter)
+{
+int i;
+
+	for(i=0 ; i<LABELS_SIZE ; i++)
+	{
+		gotoxy(5,i+1);
+		if(Counter == i)
+		{
+			textattr(0x70);
+			cprintf("%s",Labels[i]);
+			textattr(0x07);
+		}
+		else
+		{
+			printf("%s",Labels[i]);
+		}
+	}
+}
